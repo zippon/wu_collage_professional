@@ -18,37 +18,22 @@ public:
                       const std::string img_list_regular,
                       float stress_ratio,
                       int canvas_height,
-                      int canvas_width) {
-    ReadImageList(img_list_stress, img_list_regular);
-    canvas_height_ = canvas_height;
-    canvas_width_ = canvas_width;
-    canvas_alpha_ = canvas_width_ / canvas_height_;
-    tree_root_ = new TreeNode();
-    c1_ = c2_ = -1;
-  }
+                      int canvas_width);
   CollageProfessional(const std::vector<std::string> img_list_stress,
                       const std::vector<std::string> img_list_regular,
-                      float stree_ratio,
+                      float stress_ratio,
                       int canvas_height,
-                      int canvas_width) {
-    for (int i = 0; i < img_list_stress.size(); ++i) {
-      img_list_stress_.push_back(img_list_stress[i]);
-    }
-    for (int i = 0; i < img_list_regular.size(); ++i) {
-      img_list_regular_.push_back(img_list_regular[i]);
-    }
-    canvas_height_ = canvas_height;
-    canvas_width_ = canvas_width;
-    canvas_alpha_ = canvas_width_ / canvas_height_;
-    tree_root_ = new TreeNode();
-    c1_ = c2_ = -1;
-  }
+                      int canvas_width);
   ~CollageProfessional() {
-    ReleaseTree(tree_root_);
     img_list_regular_.clear();
     img_list_stress_.clear();
+    tree_leaves_.clear();
+    delete stress_collage_;
+    delete regular_1_collage_;
+    delete regular_2_collage_;
   }
-  bool CreateCollage();
+  // The function of collage generation.
+  bool CreateCollage(float canvas_width, float canvas_height);
   // Output collage into a single image.
   cv::Mat OutputCollageImage() const;
   // Output collage into a html page.
@@ -82,6 +67,9 @@ private:
   bool CalculatePositions(TreeNode* node);
   // Clean and release the binary_tree.
   void ReleaseTree(TreeNode* node);
+  // Calculate costs.
+  float CalculateC1 (float canvas_width, float canvas_height);
+  float CalculateC2 (float canvas_width, float canvas_height);
   
   // Type 1 cost - coverage of the canvas area.
   float c1_;
@@ -101,6 +89,11 @@ private:
   int canvas_width_;
   // The real aspect ratio of generated collage.
   float canvas_alpha_;
-  // Canvas width, this is computed according to canvas_aspect_ratio_.
+  // The size ratio between a stress image to regular image.
+  float stress_ratio_;
+  // sub-collages.
+  CollageAdvanced* stress_collage_;
+  CollageAdvanced* regular_1_collage_;
+  CollageAdvanced* regular_2_collage_;
 };
 #endif /* defined(__wu_collage_professional__wu_collage_professional__) */

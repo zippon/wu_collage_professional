@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94AAD2E015E3643D0050C2EB /* wu_collage_advanced.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94AAD2DE15E3643D0050C2EB /* wu_collage_advanced.cpp */; };
 		94B71F8615E251AF0024DA5C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94B71F8515E251AF0024DA5C /* main.cpp */; };
 		94B71F8815E251AF0024DA5C /* wu_collage_professional.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 94B71F8715E251AF0024DA5C /* wu_collage_professional.1 */; };
 		94B71F9015E251D50024DA5C /* wu_collage_professional.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94B71F8E15E251D50024DA5C /* wu_collage_professional.cpp */; };
-		94B71F9315E2522C0024DA5C /* wu_collage_advanced.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94B71F9115E2522C0024DA5C /* wu_collage_advanced.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,13 +27,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		94AAD2DE15E3643D0050C2EB /* wu_collage_advanced.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wu_collage_advanced.cpp; sourceTree = "<group>"; };
+		94AAD2DF15E3643D0050C2EB /* wu_collage_advanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wu_collage_advanced.h; sourceTree = "<group>"; };
 		94B71F8115E251AF0024DA5C /* wu_collage_professional */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = wu_collage_professional; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B71F8515E251AF0024DA5C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		94B71F8715E251AF0024DA5C /* wu_collage_professional.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = wu_collage_professional.1; sourceTree = "<group>"; };
 		94B71F8E15E251D50024DA5C /* wu_collage_professional.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wu_collage_professional.cpp; sourceTree = "<group>"; };
 		94B71F8F15E251D50024DA5C /* wu_collage_professional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wu_collage_professional.h; sourceTree = "<group>"; };
-		94B71F9115E2522C0024DA5C /* wu_collage_advanced.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wu_collage_advanced.cpp; sourceTree = "<group>"; };
-		94B71F9215E2522C0024DA5C /* wu_collage_advanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wu_collage_advanced.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +66,8 @@
 		94B71F8415E251AF0024DA5C /* wu_collage_professional */ = {
 			isa = PBXGroup;
 			children = (
-				94B71F9115E2522C0024DA5C /* wu_collage_advanced.cpp */,
-				94B71F9215E2522C0024DA5C /* wu_collage_advanced.h */,
+				94AAD2DE15E3643D0050C2EB /* wu_collage_advanced.cpp */,
+				94AAD2DF15E3643D0050C2EB /* wu_collage_advanced.h */,
 				94B71F8E15E251D50024DA5C /* wu_collage_professional.cpp */,
 				94B71F8F15E251D50024DA5C /* wu_collage_professional.h */,
 				94B71F8515E251AF0024DA5C /* main.cpp */,
@@ -129,7 +129,7 @@
 			files = (
 				94B71F8615E251AF0024DA5C /* main.cpp in Sources */,
 				94B71F9015E251D50024DA5C /* wu_collage_professional.cpp in Sources */,
-				94B71F9315E2522C0024DA5C /* wu_collage_advanced.cpp in Sources */,
+				94AAD2E015E3643D0050C2EB /* wu_collage_advanced.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +232,7 @@
 				94B71F8D15E251AF0024DA5C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
