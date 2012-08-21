@@ -33,7 +33,9 @@ public:
     delete regular_2_collage_;
   }
   // The function of collage generation.
-  bool CreateCollage(float canvas_width, float canvas_height);
+  bool CreateCollageHV(float canvas_width, float canvas_height);
+  bool CreateCollageVH(float canvas_width, float canvas_height);
+
   // Output collage into a single image.
   cv::Mat OutputCollageImage() const;
   // Output collage into a html page.

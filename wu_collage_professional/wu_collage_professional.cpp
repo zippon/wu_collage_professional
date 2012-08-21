@@ -250,7 +250,7 @@ bool CollageProfessional::OutputCollageHtml(const std::string output_html_path) 
 }
 
 // The function of collage generation.
-bool CollageProfessional::CreateCollage (float canvas_width, float canvas_height) {
+bool CollageProfessional::CreateCollageHV (float canvas_width, float canvas_height) {
   // Step 1: calculate the size of the stree collage.
   float stress_weight = stress_ratio_ * img_list_stress_.size();
   float regular_weight = img_list_regular_.size();
@@ -349,6 +349,107 @@ bool CollageProfessional::CreateCollage (float canvas_width, float canvas_height
   
   return true;
 }
+
+bool CollageProfessional::CreateCollageVH (float canvas_width, float canvas_height) {
+  // Step 1: calculate the size of the stree collage.
+  float stress_weight = stress_ratio_ * img_list_stress_.size();
+  float regular_weight = img_list_regular_.size();
+  float total_weight = stress_weight + regular_weight;
+  float ratio = total_weight / stress_weight;
+  
+  // Step 2: generate stress collage with
+  stress_collage_->canvas_width_ = canvas_width_;
+  int success = stress_collage_->CreateCollage(canvas_alpha_, ratio);
+  if (success == -1) {
+    std::cout << "Failure in CreateCollage 1" << std::endl;
+  }
+  
+  float stress_size = stress_collage_->canvas_height() *
+  stress_collage_->canvas_width();
+  float amplifier = sqrtf(canvas_width_ * canvas_height_ / ratio / stress_size);
+  // Refine the size of stress collage.
+  float new_stress_width = stress_collage_->canvas_width() * amplifier;
+  float new_stress_height = stress_collage_->canvas_height() * amplifier;
+  assert(new_stress_height < canvas_height_);
+  assert(new_stress_width < canvas_width_);
+  
+  // Step 3: generate the other two regular collages.
+  // B: v-cut -> h-cut
+  float regular_1_width = new_stress_width;
+  float regular_1_height = canvas_height_ - new_stress_height;
+  float regular_1_alpha = regular_1_width / regular_1_height;
+  // float regular_1_size = regular_1_width * regular_1_height;
+  float regular_2_width = canvas_width_ - new_stress_width;
+  float regular_2_height = canvas_height_;
+  float regular_2_alpha = regular_2_width / regular_2_height;
+  regular_1_collage_->canvas_width_ = regular_1_width;
+  success = regular_1_collage_->CreateCollage(regular_1_alpha, 1.1);
+  if (success == -1) {
+    std::cout << "Failure in CreateCollage 2" << std::endl;
+  }
+  regular_2_collage_->canvas_width_ = regular_2_width;
+  success = regular_2_collage_->CreateCollage(regular_2_alpha, 1.1);
+  if (success == -1) {
+    std::cout << "Failure in CreateCollage 3" << std::endl;
+  }
+  
+  
+  // Step 4: connect all the three generated collages.
+  TreeNode* node = new TreeNode();
+  node->split_type_ = 'h';
+  node->child_type_ = 'l';
+  node->is_leaf_ = false;
+  node->left_child_ = stress_collage_->tree_root_;
+  stress_collage_->tree_root_->parent_ = node;
+  stress_collage_->tree_root_->child_type_ = 'l';
+  node->right_child_ = regular_1_collage_->tree_root_;
+  regular_1_collage_->tree_root_->parent_ = node;
+  regular_1_collage_->tree_root_->child_type_ = 'r';
+  node->parent_ = tree_root_;
+  tree_root_->left_child_ = node;
+  tree_root_->right_child_ = regular_2_collage_->tree_root_;
+  regular_2_collage_->tree_root_->parent_ = tree_root_;
+  regular_2_collage_->tree_root_->child_type_ = 'r';
+  tree_root_->split_type_ = 'v';
+  tree_root_->is_leaf_ = false;
+  
+  // Calculate the aspect ratio for all.
+  canvas_alpha_ = CalculateAlpha(tree_root_);
+  // Re-calculate canvas_width_ & canvas_height.
+  if (canvas_alpha_ >= canvas_width / canvas_height) {
+    canvas_width_ = canvas_width;
+    canvas_height_ = static_cast<int>(canvas_width_ / canvas_alpha_);
+  } else {
+    canvas_height_ = canvas_height;
+    canvas_width_ = static_cast<int>(canvas_height_ * canvas_alpha_);
+  }
+  // Calculate the position again for all.
+  tree_root_->position_.x_ = 0;
+  tree_root_->position_.y_ = 0;
+  tree_root_->position_.height_ = canvas_height_;
+  tree_root_->position_.width_ = canvas_width_;
+  if (tree_root_->left_child_)
+    CalculatePositions(tree_root_->left_child_);
+  if (tree_root_->right_child_)
+    CalculatePositions(tree_root_->right_child_);
+  // Finally add the tree leaves.
+  tree_leaves_.clear();
+  for (int i = 0; i < stress_collage_->tree_leaves_.size(); ++i) {
+    tree_leaves_.push_back(stress_collage_->tree_leaves_[i]);
+  }
+  for (int i = 0; i < regular_1_collage_->tree_leaves_.size(); ++i) {
+    tree_leaves_.push_back(regular_1_collage_->tree_leaves_[i]);
+  }
+  for (int i = 0; i < regular_2_collage_->tree_leaves_.size(); ++i) {
+    tree_leaves_.push_back(regular_2_collage_->tree_leaves_[i]);
+  }
+  
+  c1_ = CalculateC1(canvas_width, canvas_height);
+  c2_ = CalculateC2(canvas_width, canvas_height);
+  
+  return true;
+}
+
 
 float CollageProfessional::CalculateC1 (float canvas_width, float canvas_height) {
   float t_1 = stress_ratio_ / (stress_ratio_ *
