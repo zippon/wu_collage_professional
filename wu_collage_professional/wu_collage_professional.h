@@ -19,14 +19,9 @@ public:
                       float stress_ratio,
                       int canvas_height,
                       int canvas_width);
-  CollageProfessional(const std::vector<std::string> img_list_stress,
-                      const std::vector<std::string> img_list_regular,
-                      float stress_ratio,
-                      int canvas_height,
-                      int canvas_width);
   ~CollageProfessional() {
-    img_list_regular_.clear();
-    img_list_stress_.clear();
+    img_alpha_regular_.clear();
+    img_alpha_stress_.clear();
     tree_leaves_.clear();
     delete stress_collage_;
     delete regular_1_collage_;
@@ -80,9 +75,9 @@ private:
   // Final generation binary tree.
   TreeNode* tree_root_;
   // Vector containing stressed image paths.
-  std::vector<std::string> img_list_stress_;
+  std::vector<AlphaUnit> img_alpha_stress_;
   // Vector containing regular image paths.
-  std::vector<std::string> img_list_regular_;
+  std::vector<AlphaUnit> img_alpha_regular_;
   // Vector containing leaf nodes of the tree.
   std::vector<TreeNode*> tree_leaves_;
   // The real height of generated collage.

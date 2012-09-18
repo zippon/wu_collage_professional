@@ -80,15 +80,15 @@ public:
     canvas_width_ = canvas_width;
     canvas_alpha_ = -1;
     canvas_height_ = -1;
-    image_num_ = static_cast<int>(image_path_vec_.size());
+    image_num_ = static_cast<int>(image_alpha_vec_.size());
     srand(static_cast<unsigned>(time(0)));
     tree_root_ = new TreeNode();
   }
   CollageAdvanced(const std::vector<std::string> input_image_list, int canvas_width);
+  CollageAdvanced(const std::vector<AlphaUnit> units, int canvas_width);
   ~CollageAdvanced() {
     ReleaseTree(tree_root_);
     image_alpha_vec_.clear();
-    image_path_vec_.clear();
   }
   
   // Create collage.
@@ -168,8 +168,6 @@ private:
   // Top-down adjust aspect ratio for the final collage.
   bool AdjustAlpha(TreeNode* node, float thresh);
   
-  // Vector containing input image paths.
-  std::vector<std::string> image_path_vec_;
   // Vector containing input images' aspect ratios.
   std::vector<AlphaUnit> image_alpha_vec_;
   // Vector containing leaf nodes of the tree.

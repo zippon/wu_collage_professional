@@ -21,8 +21,8 @@ int main(int argc, const char * argv[])
     std::cout << "Error number of input arguments" << std::endl;
     return 0;
   }
-  std::string image_list_stress(argv[1]);
-  std::string image_list_regular(argv[2]);
+  std::string image_list_stress(argv[2]);
+  std::string image_list_regular(argv[1]);
   int canvas_width = 0;
   while ((canvas_width < 100) || (canvas_width > 2000)) {
     std::cout << "canvas_width [100, 2000]: ";

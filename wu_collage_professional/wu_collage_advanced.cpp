@@ -26,12 +26,23 @@ CollageAdvanced::CollageAdvanced(std::vector<std::string> input_image_list,
     new_unit.alpha_recip_ = static_cast<float>(img.rows) / img.cols;
     new_unit.image_path_ = img_path;
     image_alpha_vec_.push_back(new_unit);
-    image_path_vec_.push_back(img_path);
   }
   canvas_width_ = canvas_width;
   canvas_alpha_ = -1;
   canvas_height_ = -1;
   image_num_ = static_cast<int>(input_image_list.size());
+  srand(static_cast<unsigned>(time(0)));
+  tree_root_ = new TreeNode();
+}
+CollageAdvanced::CollageAdvanced(const std::vector<AlphaUnit> units,
+                                 int canvas_width) {
+  for (int i = 0; i < units.size(); ++i) {
+    image_alpha_vec_.push_back(units[i]);
+  }
+  canvas_width_ = canvas_width;
+  canvas_alpha_ = -1;
+  canvas_height_ = -1;
+  image_num_ = static_cast<int>(units.size());
   srand(static_cast<unsigned>(time(0)));
   tree_root_ = new TreeNode();
 }
@@ -219,7 +230,6 @@ bool CollageAdvanced::ReadImageList(std::string input_image_list) {
     new_unit.alpha_recip_ = static_cast<float>(img.rows) / img.cols;
     new_unit.image_path_ = img_path;
     image_alpha_vec_.push_back(new_unit);
-    image_path_vec_.push_back(img_path);
     ++index;
   }
   input_list.close();
