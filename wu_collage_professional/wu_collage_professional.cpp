@@ -234,7 +234,7 @@ bool CollageProfessional::CreateCollageHV (float canvas_width, float canvas_heig
   
   // Step 2: generate stress collage with
   stress_collage_->canvas_width_ = canvas_width_;
-  int success = stress_collage_->CreateCollage(canvas_alpha_);
+  int success = stress_collage_->CreateCollage(canvas_alpha_, ratio);
   if (success == -1) {
     std::cout << "Failure in CreateCollage 1" << std::endl;
   }
@@ -391,7 +391,7 @@ bool CollageProfessional::CreateCollageVH (float canvas_width, float canvas_heig
   
   // Step 2: generate stress collage with
   stress_collage_->canvas_width_ = canvas_width_;
-  int success = stress_collage_->CreateCollage(canvas_alpha_);
+  int success = stress_collage_->CreateCollage(canvas_alpha_, ratio);
   if (success == -1) {
     std::cout << "Failure in CreateCollage 1" << std::endl;
   }

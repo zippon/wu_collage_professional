@@ -344,8 +344,8 @@ void CollageAdvanced::GenerateTree(float expect_alpha) {
   }
   
   // Generate a new tree by using divide-and-conquer.
-  tree_root_ = GuidedTree(tree_root_, 'N', expect_alpha,
-                          image_num_, local_alpha, expect_alpha);
+  GuidedTree(tree_root_, 'N', expect_alpha,
+             image_num_, local_alpha, expect_alpha);
   // After guided tree generation, all the images have been dispatched to leaves.
   assert(local_alpha.size() == 0);
   return;
@@ -450,7 +450,7 @@ TreeNode* CollageAdvanced::GuidedTree(TreeNode* parent,
 bool CollageAdvanced::FindOneImage(float expect_alpha,
                                    std::vector<AlphaUnit>& alpha_array,
                                    float& find_img_alpha,
-                                   std::string & find_img_path) {
+                                   std::string& find_img_path) {
   if (alpha_array.size() == 0) return false;
   // Since alpha_array has already been sorted, we use binary search to find
   // the best-match result.
